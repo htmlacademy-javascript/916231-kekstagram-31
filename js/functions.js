@@ -2,9 +2,9 @@ function compareLength (string, length) {
   return string.length <= length;
 }
 
-console.log(compareLength('проверяемая строка', 20));
-console.log(compareLength('проверяемая строка', 18));
-console.log(compareLength('проверяемая строка', 10));
+compareLength('проверяемая строка', 20);
+compareLength('проверяемая строка', 18);
+compareLength('проверяемая строка', 10);
 
 function isPalindrome (string) {
   string = string.replaceAll(' ', '').toLowerCase();
@@ -19,10 +19,10 @@ function isPalindrome (string) {
   return true;
 }
 
-console.log(isPalindrome('топот'));
-console.log(isPalindrome('ДовОд'));
-console.log(isPalindrome('Кекс'));
-console.log(isPalindrome('Лёша на полке клопа нашёл '));
+isPalindrome('топот');
+isPalindrome('ДовОд');
+isPalindrome('Кекс');
+isPalindrome('Лёша на полке клопа нашёл ');
 
 function getInteger(string) {
   string = string.toString();
@@ -42,11 +42,11 @@ function getInteger(string) {
   return result;
 }
 
-console.log(getInteger('2023 год'));
-console.log(getInteger('ECMAScript 2022'));
-console.log(getInteger('1 кефир, 0.5 батона'));
-console.log(getInteger('агент 007'));
-console.log(getInteger('а я томат'));
-console.log(getInteger(2023));
-console.log(getInteger(-1));
-console.log(getInteger(1.5));
+getInteger('2023 год');
+getInteger('ECMAScript 2022');
+getInteger('1 кефир, 0.5 батона');
+getInteger('агент 007');
+getInteger('а я томат');
+getInteger(2023);
+getInteger(-1);
+getInteger(1.5);
