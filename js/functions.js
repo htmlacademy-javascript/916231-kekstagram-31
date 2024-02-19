@@ -1,12 +1,10 @@
-function compareLength (string, length) {
-  return string.length <= length;
-}
+const compareLength = (string, length) => string.length <= length;
 
 compareLength('проверяемая строка', 20);
 compareLength('проверяемая строка', 18);
 compareLength('проверяемая строка', 10);
 
-function isPalindrome (string) {
+const isPalindrome = (string) => {
   string = string.replaceAll(' ', '').toLowerCase();
   const length = string.length;
 
@@ -17,14 +15,14 @@ function isPalindrome (string) {
   }
 
   return true;
-}
+};
 
 isPalindrome('топот');
 isPalindrome('ДовОд');
 isPalindrome('Кекс');
 isPalindrome('Лёша на полке клопа нашёл ');
 
-function getInteger(string) {
+const getInteger = (string) => {
   string = string.toString();
   let result = '';
 
@@ -40,7 +38,7 @@ function getInteger(string) {
   }
 
   return result;
-}
+};
 
 getInteger('2023 год');
 getInteger('ECMAScript 2022');
