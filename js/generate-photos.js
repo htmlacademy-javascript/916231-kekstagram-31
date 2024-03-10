@@ -32,7 +32,7 @@ const getNumberPhoto = createUniqueNumbersGenerator(MIN_NUMBER_PHOTO, MAX_NUMBER
 
 const getPhoto = () => ({
   id: getPhotoId(),
-  utl: `photos/${ getNumberPhoto() }.jpg`,
+  url: `photos/${ getNumberPhoto() }.jpg`,
   description: PHOTO_DESCRIPTIONS[getRandomInteger(0, PHOTO_DESCRIPTIONS.length - 1)],
   likes: getRandomInteger(MIN_COUNT_LIKES, MAX_COUNT_LIKES),
   comments: Array.from({length: getRandomInteger(MIN_COUNT_COMMENTS, MAX_COUNT_COMMENTS)}, getComment),
