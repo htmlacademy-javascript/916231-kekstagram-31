@@ -6,6 +6,10 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const isEnterKey = (evt) => evt.key === 'Enter';
+
 const createUniqueNumbersGenerator = (min, max) => {
   const previousValues = [];
 
@@ -62,4 +66,4 @@ const getInteger = (string) => {
   return result;
 };
 
-export {getRandomInteger, createUniqueNumbersGenerator};
+export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey};
