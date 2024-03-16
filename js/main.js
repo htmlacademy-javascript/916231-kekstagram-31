@@ -1,4 +1,4 @@
-import { generatePhotos } from './generate-photos.js';
+import { initMiniature } from './miniature.js';
 
 // eslint-disable-next-line no-console
-console.log(generatePhotos());
+initMiniature();
