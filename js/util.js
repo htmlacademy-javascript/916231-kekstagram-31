@@ -66,4 +66,4 @@ const getInteger = (string) => {
   return result;
 };
 
-export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey};
+export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength};
