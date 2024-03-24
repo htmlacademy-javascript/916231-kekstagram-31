@@ -18,10 +18,8 @@ const initMiniature = () => {
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
 
-    pictureElement.addEventListener('click', (evt) => {
-      if (evt.target.closest('.picture')) {
-        openPicture(photo);
-      }
+    pictureElement.addEventListener('click', () => {
+      openPicture(photo);
     });
 
     pictureListFragment.appendChild(pictureElement);

@@ -1,4 +1,5 @@
-import { initMiniature } from './miniature.js';
+import {initMiniature} from './miniature.js';
+import {loadImage} from './form.js';
 
-// eslint-disable-next-line no-console
 initMiniature();
+loadImage();
