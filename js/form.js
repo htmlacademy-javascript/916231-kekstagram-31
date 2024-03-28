@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {submitFormValidation, addValidator, removeValidator} from './validate-form.js';
+import {initScale, removeScale} from './scale-picture.js';
+import {initFilter, removeFilter} from './filter-picture.js';
 
 const formElement = document.querySelector('#upload-select-image');
 const formInputElement = formElement.querySelector('.img-upload__input');
@@ -9,9 +11,7 @@ const descriptionElement = formElement.querySelector('.text__description');
 const hashtagElement = formElement.querySelector('.text__hashtags');
 
 const clearForm = () => {
-  formInputElement.value = '';
-  hashtagElement.value = '';
-  descriptionElement.value = '';
+  formElement.reset();
 };
 
 const validateForm = (evt) => {
@@ -23,9 +23,11 @@ const closeModal = () => {
   imgModalElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  clearForm();
   formElement.removeEventListener('submit', validateForm);
+  clearForm();
   removeValidator();
+  removeScale();
+  removeFilter();
 
   closeElement.removeEventListener('click', closeModal);
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -35,8 +37,10 @@ const openModal = () => {
   imgModalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  addValidator();
   formElement.addEventListener('submit', validateForm);
+  addValidator();
+  initScale();
+  initFilter();
 
   closeElement.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeydown);
