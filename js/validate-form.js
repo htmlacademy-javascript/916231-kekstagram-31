@@ -60,9 +60,7 @@ const validateHashtags = (value) => {
 
 const getErrorHashtagMessage = () => errorValidateHashtagMessage;
 
-const submitFormValidation = () => {
-  pristine.validate();
-};
+const submitFormValidation = () => pristine.validate();
 
 const addValidator = () => {
   pristine = new Pristine(formElement, {
