@@ -5,6 +5,13 @@ const pictureListElement = document.querySelector('.pictures');
 
 const pictureListFragment = document.createDocumentFragment();
 
+const clearMiniature = () => {
+  const pictures = pictureListElement.querySelectorAll('.picture');
+  pictures.forEach((picture) => {
+    pictureListElement.removeChild(picture);
+  });
+};
+
 const initMiniature = (pictures) => {
   pictures.forEach((photo) => {
     const {url, description, likes, comments} = photo;
@@ -25,4 +32,4 @@ const initMiniature = (pictures) => {
   pictureListElement.appendChild(pictureListFragment);
 };
 
-export {initMiniature};
+export {initMiniature, clearMiniature};
