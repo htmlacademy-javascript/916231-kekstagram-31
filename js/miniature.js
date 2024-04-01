@@ -1,15 +1,12 @@
 import {openPicture} from './big-picture.js';
-import {generatePhotos} from './generate-photos.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictureListElement = document.querySelector('.pictures');
 
-const photos = generatePhotos();
-
 const pictureListFragment = document.createDocumentFragment();
 
-const initMiniature = () => {
-  photos.forEach((photo) => {
+const initMiniature = (pictures) => {
+  pictures.forEach((photo) => {
     const {url, description, likes, comments} = photo;
     const pictureElement = pictureTemplate.cloneNode(true);
 

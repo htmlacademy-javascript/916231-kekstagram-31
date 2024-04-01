@@ -1,3 +1,7 @@
+const ALERT_SHOW_TIME = 5000;
+
+let successElement;
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -30,40 +34,54 @@ const createUniqueNumbersGenerator = (min, max) => {
   };
 };
 
-// eslint-disable-next-line no-unused-vars
 const compareLength = (string, length) => string.length <= length;
 
-// eslint-disable-next-line no-unused-vars
-const isPalindrome = (string) => {
-  string = string.replaceAll(' ', '').toLowerCase();
-  const length = string.length;
+const showAlert = (errorText) => {
+  const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+  const alertElement = alertTemplate.cloneNode(true);
+  alertElement.textContent = errorText;
+  document.body.append(alertElement);
 
-  for(let i = 0; i < length / 2; i++) {
-    if(string[i] !== string[length - i - 1]) {
-      return false;
-    }
-  }
-
-  return true;
+  setTimeout(() => {
+    alertElement.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-// eslint-disable-next-line no-unused-vars
-const getInteger = (string) => {
-  string = string.toString();
-  let result = '';
-
-  for(let i = 0; i < string.length; i++) {
-    const symbol = parseInt(string[i], 10);
-    if(!Number.isNaN(symbol)) {
-      result += symbol;
-    }
-  }
-
-  if(result.length === 0) {
-    return NaN;
-  }
-
-  return result;
+const onSuccessButtonClick = () => {
+  document.body.removeChild(successElement);
 };
 
-export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength};
+const closeSuccess = () => {
+  document.body.removeChild(successElement);
+  document.removeEventListener('click', onSuccessDocumentClick);
+  document.removeEventListener('keydown', onSuccessEscKeydown);
+};
+
+function onSuccessDocumentClick (evt) {
+  if (evt.target === successElement) {
+    closeSuccess();
+  }
+}
+
+function onSuccessEscKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    closeSuccess();
+  }
+}
+
+const showSuccess = (successText) => {
+  const successTemplate = document.querySelector('#success').content.querySelector('.success');
+  successElement = successTemplate.cloneNode(true);
+  const successTitleElement = successElement.querySelector('.success__title');
+  const successButtonElement = successElement.querySelector('.success__button');
+
+  successTitleElement.textContent = successText;
+
+  successButtonElement.addEventListener('click', onSuccessButtonClick);
+  document.addEventListener('click', onSuccessDocumentClick);
+  document.addEventListener('keydown', onSuccessEscKeydown);
+
+  document.body.append(successElement);
+};
+
+export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength, showAlert, showSuccess};
