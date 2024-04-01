@@ -5,17 +5,12 @@ const Route = {
   SEND_DATA: '/',
 };
 
-const Method = {
-  GET: 'GET',
-  POST: 'POST',
-};
-
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-const load = (route, errorText, url, method = Method.GET, body = null) =>
+const load = (route, errorText, url, method = 'GET', body = null) =>
   fetch(`${url}${route}`, {method, body})
     .then((response) => {
       if (!response.ok) {
@@ -27,8 +22,8 @@ const load = (route, errorText, url, method = Method.GET, body = null) =>
       throw new Error(errorText);
     });
 
-const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA, URL);
+const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA, URL, 'GET');
 
-const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, URL, Method.POST, body);
+const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, URL, 'POST', body);
 
 export {getData, sendData};
