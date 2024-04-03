@@ -11,6 +11,11 @@ const closeElement = formElement.querySelector('.img-upload__cancel');
 const descriptionElement = formElement.querySelector('.text__description');
 const hashtagElement = formElement.querySelector('.text__hashtags');
 const submitElement = formElement.querySelector('#upload-submit');
+const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
+const imgPreviewElements = formElement.querySelectorAll('.effects__preview');
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const MAX_FILE_SIZE = 1024 * 1024;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -41,17 +46,29 @@ const closeModal = () => {
 };
 
 const openModal = () => {
-  formElement.addEventListener('submit', onSubmitClick);
-  imgModalElement.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  const file = formInputElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const typeMatches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const sizeMatches = file.size <= MAX_FILE_SIZE;
 
-  formElement.addEventListener('submit', validateForm);
-  addValidator();
-  initScale();
-  initFilter();
+  if (typeMatches && sizeMatches) {
+    imgPreviewElement.src = URL.createObjectURL(file);
+    imgPreviewElements.forEach((element) => {
+      element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
 
-  closeElement.addEventListener('click', closeModal);
-  document.addEventListener('keydown', onDocumentKeydown);
+    formElement.addEventListener('submit', onSubmitClick);
+    imgModalElement.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+
+    formElement.addEventListener('submit', validateForm);
+    addValidator();
+    initScale();
+    initFilter();
+
+    closeElement.addEventListener('click', closeModal);
+    document.addEventListener('keydown', onDocumentKeydown);
+  }
 };
 
 function onDocumentKeydown (evt) {
