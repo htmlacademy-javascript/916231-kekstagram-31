@@ -1,4 +1,4 @@
-import {isEscapeKey, showAlert, showSuccess} from './util.js';
+import {isEscapeKey, showError, showSuccess} from './util.js';
 import {sendData} from './api.js';
 import {submitFormValidation, addValidator, removeValidator} from './validate-form.js';
 import {initScale, removeScale} from './scale-picture.js';
@@ -26,22 +26,16 @@ const clearForm = () => {
   formElement.reset();
 };
 
-const validateForm = (evt) => {
-  evt.preventDefault();
-  submitFormValidation();
-};
-
 const closeModal = () => {
-  formElement.removeEventListener('submit', onSubmitClick);
   imgModalElement.classList.add('hidden');
+  formElement.removeEventListener('submit', onFormSubmit);
   document.body.classList.remove('modal-open');
-  formElement.removeEventListener('submit', validateForm);
   clearForm();
   removeValidator();
   removeScale();
   removeFilter();
 
-  closeElement.removeEventListener('click', closeModal);
+  closeElement.removeEventListener('click', onCloseClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -57,28 +51,18 @@ const openModal = () => {
       element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
     });
 
-    formElement.addEventListener('submit', onSubmitClick);
+    formElement.addEventListener('submit', onFormSubmit);
     imgModalElement.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    formElement.addEventListener('submit', validateForm);
     addValidator();
     initScale();
     initFilter();
 
-    closeElement.addEventListener('click', closeModal);
+    closeElement.addEventListener('click', onCloseClick);
     document.addEventListener('keydown', onDocumentKeydown);
   }
 };
-
-function onDocumentKeydown (evt) {
-  if (hashtagElement === document.activeElement || descriptionElement === document.activeElement) {
-    evt.stopPropagation();
-  } else if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeModal();
-  }
-}
 
 const blockSubmitButton = () => {
   submitElement.disabled = true;
@@ -90,8 +74,17 @@ const unblockSubmitButton = () => {
   submitElement.textContent = SubmitButtonText.IDLE;
 };
 
-function onSubmitClick (evt) {
+const loadImage = () => {
+  formInputElement.addEventListener('change', onInputChange);
+};
+
+function onInputChange() {
+  openModal();
+}
+
+function onFormSubmit (evt) {
   evt.preventDefault();
+  submitFormValidation();
 
   if (submitFormValidation()) {
     blockSubmitButton();
@@ -99,7 +92,7 @@ function onSubmitClick (evt) {
       .then(submitForm)
       .catch(
         (err) => {
-          showAlert(err.message);
+          showError(err.message);
         }
       )
       .finally(unblockSubmitButton);
@@ -111,8 +104,17 @@ function submitForm() {
   showSuccess('Изображение успешно загружено');
 }
 
-const loadImage = () => {
-  formInputElement.addEventListener('change', openModal);
-};
+function onCloseClick () {
+  closeModal();
+}
 
-export {loadImage};
+function onDocumentKeydown (evt) {
+  if (hashtagElement === document.activeElement || descriptionElement === document.activeElement) {
+    evt.stopPropagation();
+  } else if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+}
+
+export {loadImage, onDocumentKeydown};

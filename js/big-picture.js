@@ -47,6 +47,7 @@ const renderComments = () => {
 
   if(commentsLoadedCount >= bigPictureCommentTotalCountElement.textContent) {
     bigPictureCommentsLoaderElement.classList.add('hidden');
+    bigPictureCommentsLoaderElement.removeEventListener('click', onCommentsLoaderClick);
   }
 
   commentsElement.appendChild(fragmentComments);
@@ -67,7 +68,7 @@ const closePicture = () => {
   bigPictureElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  bigPictureCloseElement.removeEventListener('click', closePicture);
+  bigPictureCloseElement.removeEventListener('click', onCloseClick);
 };
 
 const clearComments = () => {
@@ -77,17 +78,21 @@ const clearComments = () => {
 };
 
 const openPicture = (dataPicture) => {
+  clearComments();
+
   if (dataPicture.url !== renderedPictureUrl) {
-    clearComments();
     renderBigPicture(dataPicture);
+  } else {
+    comments = dataPicture.comments;
+    renderComments();
   }
 
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  bigPictureCloseElement.addEventListener('click', closePicture);
-  bigPictureCommentsLoaderElement.addEventListener('click', renderComments);
+  bigPictureCloseElement.addEventListener('click', onCloseClick);
+  bigPictureCommentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 };
 
 function onDocumentKeydown (evt) {
@@ -95,6 +100,14 @@ function onDocumentKeydown (evt) {
     evt.preventDefault();
     closePicture();
   }
+}
+
+function onCloseClick() {
+  closePicture();
+}
+
+function onCommentsLoaderClick () {
+  renderComments();
 }
 
 export {openPicture};
