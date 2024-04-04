@@ -1,10 +1,6 @@
 
 import {createSlider, updateSlider, hiddenSlider, showSlider, removeSlider} from './filter-slider.js';
 
-const valueElement = document.querySelector('.effect-level__value');
-const filtersElement = document.querySelector('.effects__list');
-const pictureElement = document.querySelector('.img-upload__preview img');
-
 const Filters = {
   EFFECT_NONE: 'effect-none',
   EFFECT_CHROME: 'effect-chrome',
@@ -41,6 +37,10 @@ const FiltersOptions = {
     step: 0.1,
   },
 };
+
+const valueElement = document.querySelector('.effect-level__value');
+const filtersElement = document.querySelector('.effects__list');
+const pictureElement = document.querySelector('.img-upload__preview img');
 
 const filterFunctions = {
   setFilterNone: () => {

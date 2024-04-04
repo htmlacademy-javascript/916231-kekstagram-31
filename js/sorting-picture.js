@@ -1,6 +1,8 @@
 import {debounce, createUniqueNumbersGenerator} from './util.js';
 import {initMiniature, clearMiniature} from './miniature.js';
 
+const RANDOM_PICTURE_COUNT = 10;
+
 const sortingElement = document.querySelector('.img-filters');
 const formSortingElement = sortingElement.querySelector('.img-filters__form');
 const sortDefaultElement = formSortingElement.querySelector('#filter-default');
@@ -8,8 +10,6 @@ const sortRandomElement = formSortingElement.querySelector('#filter-random');
 const sortDiscussedElement = formSortingElement.querySelector('#filter-discussed');
 
 let currentSortElement = sortDefaultElement;
-
-const RANDOM_PICTURE_COUNT = 10;
 
 const randomSorting = (pictures) => {
   const getUniqueNumber = createUniqueNumbersGenerator(0, pictures.length - 1);

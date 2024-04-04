@@ -1,4 +1,4 @@
-import {loadImage} from './form.js';
+import {loadPicture} from './load-picture.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
 import {initSortingPictures} from './sorting-picture.js';
@@ -13,4 +13,4 @@ getData()
     }
   );
 
-loadImage();
+loadPicture();

@@ -1,10 +1,5 @@
 import {compareLength} from './util.js';
 
-const formElement = document.querySelector('#upload-select-image');
-const descriptionElement = formElement.querySelector('.text__description');
-const hashtagElement = formElement.querySelector('.text__hashtags');
-const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
-
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
 const ERROR_VALIDATE_DESCRIPTION_MESSAGE = 'Длина комментария не может составлять больше 140 символов';
@@ -13,6 +8,11 @@ const ErrorValidateHashtagMessages = {
   REPEAT_HASHTAG: 'Хэш-тег не может повторяться',
   COUNT_HASHTAG: `Не больше ${ MAX_HASHTAGS_COUNT } хэш-тегов`
 };
+
+const formElement = document.querySelector('#upload-select-image');
+const descriptionElement = formElement.querySelector('.text__description');
+const hashtagElement = formElement.querySelector('.text__hashtags');
+const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 let pristine;
 let errorValidateHashtagMessage = '';
