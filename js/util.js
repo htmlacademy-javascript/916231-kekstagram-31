@@ -1,6 +1,9 @@
+import {onDocumentKeydown} from './form.js';
+
 const ALERT_SHOW_TIME = 5000;
 
 let successElement;
+let errorElement;
 
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -55,6 +58,7 @@ const closeSuccess = () => {
   document.body.removeChild(successElement);
   document.removeEventListener('click', onSuccessDocumentClick);
   document.removeEventListener('keydown', onSuccessEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 function onSuccessDocumentClick (evt) {
@@ -80,8 +84,46 @@ const showSuccess = (successText) => {
   successButtonElement.addEventListener('click', onSuccessButtonClick);
   document.addEventListener('click', onSuccessDocumentClick);
   document.addEventListener('keydown', onSuccessEscKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
 
   document.body.append(successElement);
+};
+
+const onErrorButtonClick = () => {
+  document.body.removeChild(errorElement);
+};
+
+const closeError = () => {
+  document.body.removeChild(errorElement);
+  document.removeEventListener('click', onErrorDocumentClick);
+  document.removeEventListener('keydown', onErrorEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+function onErrorDocumentClick (evt) {
+  if (evt.target === errorElement) {
+    closeError();
+  }
+}
+
+function onErrorEscKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    closeError();
+  }
+}
+
+const showError = () => {
+  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  errorElement = errorTemplate.cloneNode(true);
+  const errorButtonElement = errorElement.querySelector('.error__button');
+
+
+  errorButtonElement.addEventListener('click', onErrorButtonClick);
+  document.addEventListener('click', onErrorDocumentClick);
+  document.addEventListener('keydown', onErrorEscKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
+
+  document.body.append(errorElement);
 };
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -94,4 +136,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength, showAlert, showSuccess, debounce};
+export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength, showAlert, showSuccess, showError, debounce};
