@@ -4,23 +4,17 @@ import {submitFormValidation, addValidator, removeValidator} from './validate-fo
 import {initScale, removeScale} from './scale-picture.js';
 import {initFilter, removeFilter} from './filter-picture.js';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...'
+};
+
 const formElement = document.querySelector('#upload-select-image');
-const formInputElement = formElement.querySelector('.img-upload__input');
 const imgModalElement = formElement.querySelector('.img-upload__overlay');
 const closeElement = formElement.querySelector('.img-upload__cancel');
 const descriptionElement = formElement.querySelector('.text__description');
 const hashtagElement = formElement.querySelector('.text__hashtags');
 const submitElement = formElement.querySelector('#upload-submit');
-const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
-const imgPreviewElements = formElement.querySelectorAll('.effects__preview');
-
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-const MAX_FILE_SIZE = 1024 * 1024;
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Отправляю...'
-};
 
 const clearForm = () => {
   formElement.reset();
@@ -40,28 +34,16 @@ const closeModal = () => {
 };
 
 const openModal = () => {
-  const file = formInputElement.files[0];
-  const fileName = file.name.toLowerCase();
-  const typeMatches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  const sizeMatches = file.size <= MAX_FILE_SIZE;
+  formElement.addEventListener('submit', onFormSubmit);
+  imgModalElement.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 
-  if (typeMatches && sizeMatches) {
-    imgPreviewElement.src = URL.createObjectURL(file);
-    imgPreviewElements.forEach((element) => {
-      element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
-    });
+  addValidator();
+  initScale();
+  initFilter();
 
-    formElement.addEventListener('submit', onFormSubmit);
-    imgModalElement.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-
-    addValidator();
-    initScale();
-    initFilter();
-
-    closeElement.addEventListener('click', onCloseClick);
-    document.addEventListener('keydown', onDocumentKeydown);
-  }
+  closeElement.addEventListener('click', onCloseClick);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const blockSubmitButton = () => {
@@ -73,14 +55,6 @@ const unblockSubmitButton = () => {
   submitElement.disabled = false;
   submitElement.textContent = SubmitButtonText.IDLE;
 };
-
-const loadImage = () => {
-  formInputElement.addEventListener('change', onInputChange);
-};
-
-function onInputChange() {
-  openModal();
-}
 
 function onFormSubmit (evt) {
   evt.preventDefault();
@@ -117,4 +91,4 @@ function onDocumentKeydown (evt) {
   }
 }
 
-export {loadImage, onDocumentKeydown};
+export {openModal, onDocumentKeydown};

@@ -16,8 +16,6 @@ const getRandomInteger = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const isEnterKey = (evt) => evt.key === 'Enter';
-
 const createUniqueNumbersGenerator = (min, max) => {
   const previousValues = [];
 
@@ -137,4 +135,4 @@ const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   };
 };
 
-export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, isEnterKey, compareLength, showAlert, showSuccess, showError, debounce};
+export {getRandomInteger, createUniqueNumbersGenerator, isEscapeKey, compareLength, showAlert, showSuccess, showError, debounce};
