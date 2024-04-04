@@ -44,12 +44,12 @@ const initSortingPictures = (pictures) => {
   initMiniature(pictures);
   sortingElement.classList.remove('img-filters--inactive');
 
-  formSortingElement.addEventListener('click', (evt) => {
+  formSortingElement.addEventListener('click', debounce((evt) => {
     currentSortElement.classList.remove('img-filters__button--active');
     currentSortElement = evt.target;
     currentSortElement.classList.add('img-filters__button--active');
-    debounce(sortMiniature(pictures));
-  });
+    sortMiniature(pictures);
+  }));
 };
 
 export {initSortingPictures};

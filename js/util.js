@@ -1,6 +1,7 @@
 import {onDocumentKeydown} from './form.js';
 
 const ALERT_SHOW_TIME = 5000;
+const TIMEOUT_DELAY = 500;
 
 let successElement;
 let errorElement;
@@ -126,7 +127,7 @@ const showError = () => {
   document.body.append(errorElement);
 };
 
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   let timeoutId;
 
   return (...rest) => {
